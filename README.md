@@ -7,3 +7,4 @@ Because I always loved to play the original version of this game, I recreated th
 
 Thanks for amazing textures to:
 <a href="https://iconscout.com/icons/bush" target="_blank">Bush Icon</a> by <a href="https://iconscout.com/contributors/icograms" target="_blank">Icograms</a>
+<a href="https://iconscout.com/icons/tree" target="_blank">Tree Icon</a> by <a href="https://iconscout.com/contributors/icograms" target="_blank">Icograms</a>
