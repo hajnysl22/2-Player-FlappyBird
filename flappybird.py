@@ -1,5 +1,19 @@
 import pygame
+from pygame.locals import *
 pygame.init()
+
+class Bird(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__()
+
+    def update(self):
+        self.gravity = -2
+        bird_position
+
+    def apply_gravity(self):
+        self.bird_gravity += 1
+        self.bird_position += self.bird_gravity
+
 
 # Game Window's variables
 screen_width = 1000
@@ -9,7 +23,7 @@ screen_height = 1000
 bird_position = 500 
 bird_gravity = -1
 
-
+keys = pygame.key.get_pressed()
 
 
 # Game Window
@@ -37,12 +51,12 @@ while True:
             pygame.quit()
             exit()       
 
-    if event.type == pygame.KEYDOWN:
-        if event.key == pygame.K_SPACE:
-            bird_position -= 5
+    if keys[pygame.K_SPACE]:
+        bird_position += 10
 
-    # Bird Gravity
     bird_position -= bird_gravity
+    # Bird Gravity
+
 
     # Game Window     
         # Sky
