@@ -5,14 +5,26 @@ pygame.init()
 class Bird(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
+        self.image = pygame.image.load("Visuals/bird.png")
+        self.rect = self.image.get_rect(midbottom = (80,300))
+        self.bird_gravity = 0
 
-    def update(self):
-        self.gravity = -2
-        bird_position
+    def player_input(self):
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_SPACE]:
+            self.gravity = +2
 
     def apply_gravity(self):
         self.bird_gravity += 1
-        self.bird_position += self.bird_gravity
+        self.rect.y += self.bird_gravity
+        if self.rect.bottom >= 1000:
+            self.rect.bottom = 1000
+        if self.rect.top <= 0:
+            self.rect.bottom = 0
+
+    def update(self):
+        self.player_input()
+        self.apply_gravity()
 
 
 # Game Window's variables
@@ -39,7 +51,8 @@ clock = pygame.time.Clock()
 bg_top = pygame.image.load("Visuals/background_top.png")
 bg_bottom = pygame.image.load("Visuals/background_bottom.png")
 
-bird = pygame.image.load("Visuals/bird.png")
+bird = pygame.sprite.GroupSingle()
+bird.add(Bird())
 
 
 
@@ -51,24 +64,18 @@ while True:
             pygame.quit()
             exit()       
 
-    if keys[pygame.K_SPACE]:
-        bird_position += 10
-
-    bird_position -= bird_gravity
-    # Bird Gravity
-
-
     # Game Window     
         # Sky
     screen.blit(bg_top, (0,0))
         # Bottom
     screen.blit(bg_bottom, (0,800))
         # Bird
-    screen.blit(bird, (200,bird_position))
+    bird.draw(screen)
+    bird.update()
 
     # Update
     pygame.display.update()
-    pygame.display.flip()
+    #pygame.display.flip()
 
     # FPS
     clock.tick(60)
