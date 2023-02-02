@@ -5,7 +5,9 @@ pygame.init()
 class Bird(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
-
+        self.image = pygame.image.load("Visuals/bird.png")
+        self.rect = self.image.get_rect(midbottom = (80,300))
+        self.bird_gravity = 0
         self.bird1_x = screen_width/2
         self.bird1_y = screen_width/2
         self.image = pygame.image.load("Visuals/bird.png")
