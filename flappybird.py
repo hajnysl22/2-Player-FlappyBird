@@ -7,6 +7,10 @@ class Bird(pygame.sprite.Sprite):
         super().__init__()
         self.image = pygame.image.load("Visuals/bird.png")
         self.rect = self.image.get_rect(midbottom = (80,300))
+<<<<<<< HEAD
+=======
+        self.bird_gravity = 0
+>>>>>>> main
         self.bird1_x = screen_width/2
         self.bird1_y = screen_width/2
         self.rect = self.image.get_rect(midbottom = (self.bird1_x,self.bird1_y))
@@ -78,9 +82,12 @@ bg_bottom = pygame.image.load("Visuals/background_bottom.png")
 
 bird = pygame.sprite.GroupSingle()
 bird.add(Bird())
+<<<<<<< HEAD
 
 bird2 = pygame.sprite.GroupSingle()
 bird2.add(Bird2())
+=======
+>>>>>>> main
 
 # Main Game Loop
 while True:
