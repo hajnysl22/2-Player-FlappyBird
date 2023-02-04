@@ -56,6 +56,15 @@ class Bird2(pygame.sprite.Sprite):
         self.player2_input()
         self.apply_gravity2()
 
+class Obstacles(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__()
+        self.image = pygame.image.load("Visuals/pipe.png")
+        self.rect = self.image.get_rect()
+        self.rect.topleft = 0
+
+
+
 # Game Window's variables
 screen_width = 1000
 screen_height = 1000 
@@ -78,12 +87,8 @@ bg_top = pygame.image.load("Visuals/background_top.png")
 bg_bottom = pygame.image.load("Visuals/background_bottom.png")
 
 # Bird 1
-bird = pygame.sprite.GroupSingle()
-bird.add(Bird())
-
-# Bird 2
-bird2 = pygame.sprite.GroupSingle()
-bird2.add(Bird2())
+bird = pygame.sprite.Group()
+bird.add(Bird(), Bird2())
 
 # Main Game Loop
 while True:
@@ -101,9 +106,6 @@ while True:
         # Bird 1
     bird.draw(screen)
     bird.update()
-        # Bird 2
-    bird2.draw(screen)
-    bird2.update()
 
     # Update
     pygame.display.update()
