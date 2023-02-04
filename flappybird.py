@@ -7,10 +7,6 @@ class Bird(pygame.sprite.Sprite):
         super().__init__()
         self.image = pygame.image.load("Visuals/bird.png")
         self.rect = self.image.get_rect(midbottom = (80,300))
-<<<<<<< HEAD
-=======
-        self.bird_gravity = 0
->>>>>>> main
         self.bird1_x = screen_width/2
         self.bird1_y = screen_width/2
         self.rect = self.image.get_rect(midbottom = (self.bird1_x,self.bird1_y))
@@ -66,6 +62,7 @@ screen_height = 1000
 
 # Game Variables
 keys = pygame.key.get_pressed()
+clock = pygame.time.Clock()
 
 # Game Window
 screen = pygame.display.set_mode((screen_width, screen_height))
@@ -74,20 +71,19 @@ screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption('Flappy Bird')
 flappybird_icon = pygame.image.load("Visuals/flappybird_icon.png")
 pygame.display.set_icon(flappybird_icon)
-clock = pygame.time.Clock()
+
 
 # Game Window's textures
 bg_top = pygame.image.load("Visuals/background_top.png")
 bg_bottom = pygame.image.load("Visuals/background_bottom.png")
 
+# Bird 1
 bird = pygame.sprite.GroupSingle()
 bird.add(Bird())
-<<<<<<< HEAD
 
+# Bird 2
 bird2 = pygame.sprite.GroupSingle()
 bird2.add(Bird2())
-=======
->>>>>>> main
 
 # Main Game Loop
 while True:
@@ -97,7 +93,7 @@ while True:
             pygame.quit()
             exit()       
 
-    # Game Window     
+    # Game Window Visuals
         # Sky
     screen.blit(bg_top, (0,0))
         # Bottom
