@@ -7,10 +7,8 @@ class Bird(pygame.sprite.Sprite):
         super().__init__()
         self.image = pygame.image.load("Visuals/bird.png")
         self.rect = self.image.get_rect(midbottom = (80,300))
-        self.bird_gravity = 0
         self.bird1_x = screen_width/2
         self.bird1_y = screen_width/2
-        self.image = pygame.image.load("Visuals/bird.png")
         self.rect = self.image.get_rect(midbottom = (self.bird1_x,self.bird1_y))
         self.gravity = 0
 
@@ -31,12 +29,38 @@ class Bird(pygame.sprite.Sprite):
         self.player_input()
         self.apply_gravity()
 
+class Bird2(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__()
+        self.image = pygame.image.load("Visuals/bird.png")
+        self.rect = self.image.get_rect(midbottom = (80,300))
+        self.bird2_x = screen_width/5
+        self.bird2_y = screen_width/2
+        self.rect = self.image.get_rect(midbottom = (self.bird2_x,self.bird2_y))
+        self.gravity2 = 0
+
+    def player2_input(self):
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_w]:
+            self.gravity2 -= 0.5
+
+    def apply_gravity2(self):
+        self.gravity2 += 0.2
+        self.rect.y += self.gravity2
+        if self.rect.bottom >= screen_height-200:
+            self.rect.bottom = screen_height-200
+        elif self.rect.top <= 0:
+            self.rect.top = 0
+
+    def update(self):
+        self.player2_input()
+        self.apply_gravity2()
+
 # Game Window's variables
 screen_width = 1000
 screen_height = 1000 
 
 # Game Variables
-
 keys = pygame.key.get_pressed()
 
 # Game Window
@@ -55,6 +79,9 @@ bg_bottom = pygame.image.load("Visuals/background_bottom.png")
 bird = pygame.sprite.GroupSingle()
 bird.add(Bird())
 
+bird2 = pygame.sprite.GroupSingle()
+bird2.add(Bird2())
+
 # Main Game Loop
 while True:
     # Easily exit the game 
@@ -68,9 +95,12 @@ while True:
     screen.blit(bg_top, (0,0))
         # Bottom
     screen.blit(bg_bottom, (0,screen_height-200))
-        # Bird
+        # Bird 1
     bird.draw(screen)
     bird.update()
+        # Bird 2
+    bird2.draw(screen)
+    bird2.update()
 
     # Update
     pygame.display.update()
