@@ -1,4 +1,5 @@
 import pygame
+import random
 from pygame.locals import *
 pygame.init()
 
@@ -59,19 +60,33 @@ class Bird2(pygame.sprite.Sprite):
 class Obstacles(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
-        self.image = pygame.image.load("Visuals/pipe.png")
-        self.rect = self.image.get_rect()
-        self.rect.topleft = 0
+        self.image = pygame.image.load('Visuals/pipe.png')
+        self.rect =  self.image.get_rect()
+        self.position = random.randint(-1, 1)
 
+        if self.position == 1:
+            self.image = pygame.transform.flip(self.image, False, True)
+            self.rect =  self.image.get_rect(bottomleft = (screen_width, screen_height - int(pipe_space / 2)))
+        if self.position == -1:
+            self.rect = self.image.get_rect(topleft = [screen_width, screen_height + int(pipe_space / 2)])
 
+        def update(self):
+            self.rect.x -= pipe_speed
+            if self.rect.right < 0:
+                self.kill()
 
-# Game Window's variables
+    # Game Window's variables
 screen_width = 1000
 screen_height = 1000 
 
 # Game Variables
 keys = pygame.key.get_pressed()
 clock = pygame.time.Clock()
+
+pipe_speed = 4
+pipe_space = 150
+pipe_timer = 1500 #milliseconds
+last_pipe = pygame.time.get_ticks()
 
 # Game Window
 screen = pygame.display.set_mode((screen_width, screen_height))
@@ -86,9 +101,13 @@ pygame.display.set_icon(flappybird_icon)
 bg_top = pygame.image.load("Visuals/background_top.png")
 bg_bottom = pygame.image.load("Visuals/background_bottom.png")
 
-# Bird 1
+# Birds
 bird = pygame.sprite.Group()
 bird.add(Bird(), Bird2())
+
+# Pipes
+pipe = pygame.sprite.Group()
+pipe.add(Obstacles())
 
 # Main Game Loop
 while True:
@@ -98,14 +117,31 @@ while True:
             pygame.quit()
             exit()       
 
+    # Pipe spawn
+    time = pygame.time.get_ticks()
+    if time - last_pipe > pipe_timer:
+        pipe_height = random.randint(-100, 100)
+        pipe_bottom = Obstacles(screen_width, int(screen_height / 2) + pipe_height, -1)
+        pipe_up = Obstacles(screen_width, int(screen_height / 2) + pipe_height, 1)
+        pipe.add(pipe_bottom)
+        pipe.add(pipe_up)
+        last_pipe = time
+
     # Game Window Visuals
+
         # Sky
     screen.blit(bg_top, (0,0))
+
         # Bottom
     screen.blit(bg_bottom, (0,screen_height-200))
+
         # Bird 1
     bird.draw(screen)
     bird.update()
+
+        # Obstacles
+    pipe.draw(screen)
+    pipe.update()
 
     # Update
     pygame.display.update()
