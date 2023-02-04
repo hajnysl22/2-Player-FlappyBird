@@ -121,8 +121,8 @@ while True:
     time = pygame.time.get_ticks()
     if time - last_pipe > pipe_timer:
         pipe_height = random.randint(-100, 100)
-        pipe_bottom = Obstacles(screen_width, int(screen_height / 2) + pipe_height, -1)
-        pipe_up = Obstacles(screen_width, int(screen_height / 2) + pipe_height, 1)
+        pipe_bottom = Obstacles()
+        pipe_up = Obstacles()
         pipe.add(pipe_bottom)
         pipe.add(pipe_up)
         last_pipe = time
