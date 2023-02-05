@@ -56,14 +56,15 @@ class Bird2(pygame.sprite.Sprite):
         self.apply_gravity2()
 
 class Pipe(pygame.sprite.Sprite):
-    def __init__(self):
+    def __init__(self, x = 800, y = 240):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load("Visuals/pipe_bottom.png")
-        self.rect = self.image.get_rect()
+        self.rect = self.image.get_rect(topleft = (x,y))
+
 
     def update(self):
         self.rect.x -= pipe_speed
-        if self.rect.x <= 0:
+        if self.rect.x <= -100:
             self.kill()
 
     # Game Window's variables
@@ -74,7 +75,7 @@ screen_height = 1000
 keys = pygame.key.get_pressed()
 clock = pygame.time.Clock()
 
-pipe_speed = 4
+pipe_speed = 5
 pipe_timer = 1500 
 
 # Game Window
