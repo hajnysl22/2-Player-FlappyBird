@@ -56,10 +56,11 @@ class Bird2(pygame.sprite.Sprite):
         self.apply_gravity2()
 
 class Pipe(pygame.sprite.Sprite):
-    def __init__(self):
+    def __init__(self, x = 800, y = 240):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load("Visuals/pipe_bottom.png")
-        self.rect = self.image.get_rect()
+        self.rect = self.image.get_rect(topleft = (x,y))
+
 
     def update(self):
         self.rect.x -= pipe_speed
