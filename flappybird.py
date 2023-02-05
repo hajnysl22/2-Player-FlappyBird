@@ -114,14 +114,12 @@ while True:
 
     pipe_timer -= 10
     if pipe_timer <= 0:
-        x_top = 1200
-        x_bottom = 1200
-        y_top = random.randint(0,100)
+        x_top, x_bottom = 1200,1200
+        y_top = random.randint(-600, -480)
         y_bottom = y_top + random.randint(150,200) + pipe_bottom.get_height()
         pipe.add(Pipe(x_top, y_top, pipe_top, 'top'))
         pipe.add(Pipe(x_bottom, y_bottom, pipe_bottom, 'bottom'))
-        #pipe.add(Pipe(x_bottom, y_bottom))
-        pipe_timer = random.randint(500,700)
+        pipe_timer = random.randint(600,700)
         
 
     # Game Window Visuals
