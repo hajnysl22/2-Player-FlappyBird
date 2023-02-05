@@ -56,10 +56,13 @@ class Bird2(pygame.sprite.Sprite):
         self.apply_gravity2()
 
 class Pipe(pygame.sprite.Sprite):
-    def __init__(self, x = 0, y = 0):
+    def __init__(self,x, y, image, pipe_type):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load("Visuals/pipe_bottom.png").convert_alpha()
-        self.rect = self.image.get_rect(bottomright = (x,y))
+        self.image = image
+        self.rect = self.image.get_rect()
+        self.rect.x, self.rect.y = x, y
+        self.enter, self.exit, self.passed = False, False, False
+        self.pipe_type = pipe_type
 
     def update(self):
         self.rect.x -= pipe_speed
@@ -100,7 +103,6 @@ bird.add(Bird(), Bird2())
 
 # Pipes
 pipe = pygame.sprite.Group()
-pipe.add(Pipe())
 
 # Main Game Loop
 while True:
@@ -114,9 +116,10 @@ while True:
     if pipe_timer <= 0:
         x_top = 1200
         x_bottom = 1200
-        y_top = random.randint(500,900)
-        #y_bottom = y_top + random.randint(150,200) + pipe_bottom.get_height()
-        pipe.add(Pipe(x_top, y_top))
+        y_top = random.randint(0,100)
+        y_bottom = y_top + random.randint(150,200) + pipe_bottom.get_height()
+        pipe.add(Pipe(x_top, y_top, pipe_top, 'top'))
+        pipe.add(Pipe(x_bottom, y_bottom, pipe_bottom, 'bottom'))
         #pipe.add(Pipe(x_bottom, y_bottom))
         pipe_timer = random.randint(500,700)
         
