@@ -61,11 +61,22 @@ class Pipe(pygame.sprite.Sprite):
         self.image = pygame.image.load("Visuals/pipe_bottom.png")
         self.rect = self.image.get_rect(topleft = (x,y))
 
+    def spawn_pipe(self, pipe_timer = 1500):
+        pipe_timer -= 150
+        if pipe_timer <= 0:
+            x_top, x_bottom = 550, 550
+            y_top = random.randint(-600, -480)
+            y_bottom = y_top + random.randint(90, 130) + pipe_bottom.get_height()
+            pipe.add(Pipe(x_top, y_top, pipe_top, 'top'))
+            pipe.add(Pipe(x_bottom, y_bottom, pipe_bottom, 'bottom'))
+            pipe_timer = random.randint(180, 250)
+        pipe_timer = 1500
 
     def update(self):
         self.rect.x -= pipe_speed
         if self.rect.x <= -100:
             self.kill()
+        self.spawn_pipe()
 
     # Game Window's variables
 screen_width = 1000
@@ -110,16 +121,6 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             exit()       
-
-        # Spawn Pipes
-        if pipe_timer <= 0:
-            x_top, x_bottom = 550, 550
-            y_top = random.randint(-600, -480)
-            y_bottom = y_top + random.randint(90, 130) + pipe_bottom.get_height()
-            pipe.add(Pipe(x_top, y_top, pipe_top, 'top'))
-            pipe.add(Pipe(x_bottom, y_bottom, pipe_bottom, 'bottom'))
-            pipe_timer = random.randint(180, 250)
-        pipe_timer -= 1
 
     # Game Window Visuals
 
