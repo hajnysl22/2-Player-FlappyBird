@@ -7,7 +7,6 @@ class Bird(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
         self.image = pygame.image.load("Visuals/bird.png")
-        self.rect = self.image.get_rect(midbottom = (80,300))
         self.bird1_x = screen_width/2
         self.bird1_y = screen_width/2
         self.rect = self.image.get_rect(midbottom = (self.bird1_x,self.bird1_y))
@@ -34,7 +33,6 @@ class Bird2(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
         self.image = pygame.image.load("Visuals/bird.png")
-        self.rect = self.image.get_rect(midbottom = (80,300))
         self.bird2_x = screen_width/5
         self.bird2_y = screen_width/2
         self.rect = self.image.get_rect(midbottom = (self.bird2_x,self.bird2_y))
@@ -57,23 +55,16 @@ class Bird2(pygame.sprite.Sprite):
         self.player2_input()
         self.apply_gravity2()
 
-class Obstacles(pygame.sprite.Sprite):
+class Pipe(pygame.sprite.Sprite):
     def __init__(self):
-        super().__init__()
-        self.image = pygame.image.load('Visuals/pipe.png')
-        self.rect =  self.image.get_rect()
-        self.position = random.randint(-1, 1)
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.image.load("Visuals/pipe_bottom.png")
+        self.rect = self.image.get_rect()
 
-        if self.position == 1:
-            self.image = pygame.transform.flip(self.image, False, True)
-            self.rect =  self.image.get_rect(bottomleft = (screen_width, screen_height - int(pipe_space / 2)))
-        if self.position == -1:
-            self.rect = self.image.get_rect(topleft = [screen_width, screen_height + int(pipe_space / 2)])
-
-        def update(self):
-            self.rect.x -= pipe_speed
-            if self.rect.right < 0:
-                self.kill()
+    def update(self):
+        self.rect.x -= pipe_speed
+        if self.rect.x <= 0:
+            self.kill()
 
     # Game Window's variables
 screen_width = 1000
@@ -84,9 +75,7 @@ keys = pygame.key.get_pressed()
 clock = pygame.time.Clock()
 
 pipe_speed = 4
-pipe_space = 150
-pipe_timer = 1500 #milliseconds
-last_pipe = pygame.time.get_ticks()
+pipe_timer = 1500 
 
 # Game Window
 screen = pygame.display.set_mode((screen_width, screen_height))
@@ -96,10 +85,14 @@ pygame.display.set_caption('Flappy Bird')
 flappybird_icon = pygame.image.load("Visuals/flappybird_icon.png")
 pygame.display.set_icon(flappybird_icon)
 
-
 # Game Window's textures
+    # Background
 bg_top = pygame.image.load("Visuals/background_top.png")
 bg_bottom = pygame.image.load("Visuals/background_bottom.png")
+
+    # Pipes
+pipe_top = pygame.image.load("Visuals/pipe_top.png")
+pipe_bottom = pygame.image.load("Visuals/pipe_bottom.png")
 
 # Birds
 bird = pygame.sprite.Group()
@@ -107,7 +100,7 @@ bird.add(Bird(), Bird2())
 
 # Pipes
 pipe = pygame.sprite.Group()
-pipe.add(Obstacles())
+pipe.add(Pipe())
 
 # Main Game Loop
 while True:
@@ -117,15 +110,15 @@ while True:
             pygame.quit()
             exit()       
 
-    # Pipe spawn
-    time = pygame.time.get_ticks()
-    if time - last_pipe > pipe_timer:
-        pipe_height = random.randint(-100, 100)
-        pipe_bottom = Obstacles()
-        pipe_up = Obstacles()
-        pipe.add(pipe_bottom)
-        pipe.add(pipe_up)
-        last_pipe = time
+        # Spawn Pipes
+        if pipe_timer <= 0:
+            x_top, x_bottom = 550, 550
+            y_top = random.randint(-600, -480)
+            y_bottom = y_top + random.randint(90, 130) + pipe_bottom.get_height()
+            pipe.add(Pipe(x_top, y_top, pipe_top, 'top'))
+            pipe.add(Pipe(x_bottom, y_bottom, pipe_bottom, 'bottom'))
+            pipe_timer = random.randint(180, 250)
+        pipe_timer -= 1
 
     # Game Window Visuals
 
