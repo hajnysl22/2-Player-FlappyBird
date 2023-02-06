@@ -77,7 +77,7 @@ screen_height = 1000
 keys = pygame.key.get_pressed()
 clock = pygame.time.Clock()
 
-pipe_speed = 4
+pipe_speed = 3.5
 pipe_timer = 0
 
 # Game Window
