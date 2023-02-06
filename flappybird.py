@@ -20,8 +20,8 @@ class Bird(pygame.sprite.Sprite):
     def apply_gravity(self):
         self.gravity += 0.2
         self.rect.y += self.gravity
-        if self.rect.bottom >= screen_height-200:
-            self.rect.bottom = screen_height-200
+        if self.rect.bottom >= screen_height+10:
+            self.rect.bottom = screen_height+10
         elif self.rect.top <= 0:
             self.rect.top = 0
 
@@ -32,7 +32,7 @@ class Bird(pygame.sprite.Sprite):
 class Bird2(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
-        self.image = pygame.image.load("Visuals/bird.png").convert_alpha()
+        self.image = pygame.image.load("Visuals/bird2.png").convert_alpha()
         self.bird2_x = screen_width/5
         self.bird2_y = screen_width/2
         self.rect = self.image.get_rect(midbottom = (self.bird2_x,self.bird2_y))
@@ -46,8 +46,8 @@ class Bird2(pygame.sprite.Sprite):
     def apply_gravity2(self):
         self.gravity2 += 0.2
         self.rect.y += self.gravity2
-        if self.rect.bottom >= screen_height-200:
-            self.rect.bottom = screen_height-200
+        if self.rect.bottom >= screen_height+10:
+            self.rect.bottom = screen_height+10
         elif self.rect.top <= 0:
             self.rect.top = 0
 
@@ -66,7 +66,7 @@ class Pipe(pygame.sprite.Sprite):
 
     def update(self):
         self.rect.x -= pipe_speed
-        if self.rect.x <= -100:
+        if self.rect.x <= -200:
             self.kill()
 
     # Game Window's variables
@@ -77,7 +77,7 @@ screen_height = 1000
 keys = pygame.key.get_pressed()
 clock = pygame.time.Clock()
 
-pipe_speed = 5
+pipe_speed = 4
 pipe_timer = 0
 
 # Game Window
@@ -90,8 +90,7 @@ pygame.display.set_icon(flappybird_icon)
 
 # Game Window's textures
     # Background
-bg_top = pygame.image.load("Visuals/background_top.png").convert()
-bg_bottom = pygame.image.load("Visuals/background_bottom.png").convert()
+bg = pygame.image.load("Visuals/background.png").convert()
 
     # Pipes
 pipe_top = pygame.image.load("Visuals/pipe_top.png").convert_alpha()
@@ -115,20 +114,16 @@ while True:
     pipe_timer -= 10
     if pipe_timer <= 0:
         x_top, x_bottom = 1200,1200
-        y_top = random.randint(-600, -480)
+        y_top = random.randint(-900,-100)
         y_bottom = y_top + random.randint(150,200) + pipe_bottom.get_height()
         pipe.add(Pipe(x_top, y_top, pipe_top, 'top'))
         pipe.add(Pipe(x_bottom, y_bottom, pipe_bottom, 'bottom'))
-        pipe_timer = random.randint(600,700)
+        pipe_timer = random.randint(900,1200)
         
 
     # Game Window Visuals
         # Sky
-    screen.blit(bg_top, (0,0))
-
-        # Bottom
-    screen.blit(bg_bottom, (0,screen_height-200))
-
+    screen.blit(bg, (0,0))
         # Bird 1
     bird.draw(screen)
     bird.update()
