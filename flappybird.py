@@ -56,13 +56,12 @@ class Bird2(pygame.sprite.Sprite):
         self.apply_gravity2()
 
 class Pipe(pygame.sprite.Sprite):
-    def __init__(self,x, y, image, pipe_type):
+    def __init__(self,x, y, image):
         pygame.sprite.Sprite.__init__(self)
         self.image = image
         self.rect = self.image.get_rect()
         self.rect.x, self.rect.y = x, y
-        self.enter, self.exit, self.passed = False, False, False
-        self.pipe_type = pipe_type
+        
 
     def update(self):
         self.rect.x -= pipe_speed
@@ -116,8 +115,8 @@ while True:
         x_top, x_bottom = 1200,1200
         y_top = random.randint(-900,-100)
         y_bottom = y_top + random.randint(150,200) + pipe_bottom.get_height()
-        pipe.add(Pipe(x_top, y_top, pipe_top, 'top'))
-        pipe.add(Pipe(x_bottom, y_bottom, pipe_bottom, 'bottom'))
+        pipe.add(Pipe(x_top, y_top, pipe_top))
+        pipe.add(Pipe(x_bottom, y_bottom, pipe_bottom))
         pipe_timer = random.randint(900,1200)
         
 
