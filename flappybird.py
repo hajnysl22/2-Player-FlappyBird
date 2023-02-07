@@ -10,13 +10,14 @@ class Bird(pygame.sprite.Sprite):
         self.bird1_x = screen_width/2
         self.bird1_y = screen_width/2
         self.rect = self.image.get_rect(midbottom = (self.bird1_x,self.bird1_y))
-        self.gravity = 0
+        self.bird_height = 0
         self.bird_speed = 0
 
     def player_input(self):
+        self.rect.y += self.bird_height
         keys = pygame.key.get_pressed()
         if keys[pygame.K_SPACE]:
-            self.gravity -= 0.5
+            self.bird_height += 0.1
 
     def player_speed(self):
         keys = pygame.key.get_pressed()
@@ -25,19 +26,9 @@ class Bird(pygame.sprite.Sprite):
             self.bird_speed += 0.1
         if keys[pygame.K_n]:
             self.bird_speed -= 0.1
-        
 
         if self.rect.right >= screen_width:
             self.rect.right = screen_width 
-        
-        
-    def apply_gravity(self):
-        self.gravity += 0.2
-        self.rect.y += self.gravity
-        if self.rect.bottom >= screen_height+10:
-            self.rect.bottom = screen_height+10
-        elif self.rect.top <= 0:
-            self.rect.top = 0
 
     def bird_death(self):
         if self.rect.right <= 0:
@@ -46,7 +37,6 @@ class Bird(pygame.sprite.Sprite):
     def update(self):
         self.player_speed()
         self.player_input()
-        self.apply_gravity()
         self.bird_death()
 
 class Bird2(pygame.sprite.Sprite):
@@ -56,24 +46,14 @@ class Bird2(pygame.sprite.Sprite):
         self.bird2_x = screen_width/5
         self.bird2_y = screen_width/2
         self.rect = self.image.get_rect(midbottom = (self.bird2_x,self.bird2_y))
-        self.gravity2 = 0
 
     def player2_input(self):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_w]:
             self.gravity2 -= 0.5
 
-    def apply_gravity2(self):
-        self.gravity2 += 0.2
-        self.rect.y += self.gravity2
-        if self.rect.bottom >= screen_height+10:
-            self.rect.bottom = screen_height+10
-        elif self.rect.top <= 0:
-            self.rect.top = 0
-
     def update(self):
         self.player2_input()
-        self.apply_gravity2()
 
 class Pipe(pygame.sprite.Sprite):
     def __init__(self,x, y, image):
