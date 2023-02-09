@@ -41,7 +41,7 @@ class Bird(pygame.sprite.Sprite):
 
     def bird_death(self):
         global bird1_alive
-        if self.rect.right <= 0:
+        if self.rect.right <= -10:
             bird1_alive = False
             self.kill()
 
@@ -89,7 +89,7 @@ class Bird2(pygame.sprite.Sprite):
 
     def bird_death(self):
         global bird2_alive 
-        if self.rect.right <= 0:
+        if self.rect.right <= -10:
             bird2_alive = False
             self.kill()
 
@@ -117,7 +117,6 @@ screen_height = 1000
 keys = pygame.key.get_pressed()
 clock = pygame.time.Clock()
 
-
 # Status of birds
 bird1_alive = True
 bird2_alive = True
@@ -143,8 +142,11 @@ pipe_top = pygame.image.load("Visuals/pipe_top.png").convert_alpha()
 pipe_bottom = pygame.image.load("Visuals/pipe_bottom.png").convert_alpha()
 
 # Birds
-bird = pygame.sprite.Group()
-bird.add(Bird(), Bird2())
+bird1 = pygame.sprite.Group()
+bird1.add(Bird(),)
+
+bird2 = pygame.sprite.Group()
+bird2.add(Bird2(),)
 
 # Pipes
 pipe = pygame.sprite.Group()
@@ -168,7 +170,7 @@ while bird1_alive or bird2_alive:
         pipe_timer = random.randint(1200,2000)
         
     # Collisions
-    collisions = pygame.sprite.groupcollide(bird, pipe, False, False)
+    collisions = pygame.sprite.groupcollide(bird1, pipe, False, False)
     if collisions:
         print(1)
 
@@ -176,8 +178,11 @@ while bird1_alive or bird2_alive:
         # Sky
     screen.blit(bg, (0,0))
         # Bird 1
-    bird.draw(screen)
-    bird.update()
+    bird1.draw(screen)
+    bird1.update()        
+        # Bird 2
+    bird2.draw(screen)
+    bird2.update()
         # Obstacles
     pipe.draw(screen)
     pipe.update()
