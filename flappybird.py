@@ -170,9 +170,18 @@ while bird1_alive or bird2_alive:
         pipe_timer = random.randint(1200,2000)
         
     # Collisions
-    collisions = pygame.sprite.groupcollide(bird1, pipe, False, False)
-    if collisions:
+    collisions1 = pygame.sprite.groupcollide(bird1, pipe, False, False)
+    collisions2 = pygame.sprite.groupcollide(bird1, pipe, False, False)
+    collisions3 = pygame.sprite.groupcollide(bird1, bird2, False, False)
+    if collisions1:
         print(1)
+
+    if collisions2:
+        print(2)
+
+    if collisions3:
+        print(3)
+
 
     # Game Window Visuals
         # Sky
