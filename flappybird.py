@@ -33,8 +33,8 @@ class Bird(pygame.sprite.Sprite):
         if self.rect.y <= 0-5:
             self.rect.y = 0-5
 
-        if self.rect.bottom >= screen_height+5:
-            self.rect.bottom = screen_height+5
+        if self.rect.bottom >= screen_height+10:
+            self.rect.bottom = screen_height+10
 
         if self.rect.right >= screen_width:
             self.rect.right = screen_width
@@ -84,6 +84,9 @@ class Bird2(pygame.sprite.Sprite):
         if self.rect.right >= screen_width:
             self.rect.right = screen_width
 
+    def collision(self):
+        print(1)
+
     def bird_death(self):
         global bird2_alive 
         if self.rect.right <= 0:
@@ -100,10 +103,10 @@ class Pipe(pygame.sprite.Sprite):
         self.image = image
         self.rect = self.image.get_rect()
         self.rect.x, self.rect.y = x, y
-        
+       
     def update(self):
         self.rect.x -= pipe_speed
-        if self.rect.x <= -200:
+        if self.rect.x <= -200: 
             self.kill()
 
     # Game Window's variables
@@ -114,9 +117,12 @@ screen_height = 1000
 keys = pygame.key.get_pressed()
 clock = pygame.time.Clock()
 
+
+# Status of birds
 bird1_alive = True
 bird2_alive = True
 
+# Pipe Variables
 pipe_speed = 3.5
 pipe_timer = 0
 
@@ -151,6 +157,7 @@ while bird1_alive or bird2_alive:
             pygame.quit()
             exit()       
 
+    # Pipe Spawner
     pipe_timer -= 10
     if pipe_timer <= 0:
         x_top, x_bottom = 1200,1200
@@ -158,8 +165,13 @@ while bird1_alive or bird2_alive:
         y_bottom = y_top + 100 + pipe_bottom.get_height()
         pipe.add(Pipe(x_top, y_top, pipe_top))
         pipe.add(Pipe(x_bottom, y_bottom, pipe_bottom))
-        pipe_timer = random.randint(900,1200)
+        pipe_timer = random.randint(1200,2000)
         
+    # Collisions
+    collisions = pygame.sprite.groupcollide(bird, pipe, False, False)
+    if collisions:
+        print(1)
+
     # Game Window Visuals
         # Sky
     screen.blit(bg, (0,0))
