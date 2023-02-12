@@ -20,7 +20,14 @@ class Bird(pygame.sprite.Sprite):
 
         # Punishment for colliding the pipe
         if self.collision:
-            self.bird_speed += 0.16
+            # Need to stop the player first
+            if self.bird_speed >= 0:
+                self.bird_speed = 0
+            elif self.bird_speed <= 0:
+                self.bird_speed = 0
+            # Punishing the player
+            self.bird_speed += 1
+
             # Border
             if self.rect.y <= 0-5:
                 self.rect.y = 0-5
@@ -157,8 +164,8 @@ class Pipe(pygame.sprite.Sprite):
             self.kill()
 
     # Game Window's variables
-screen_width = 1000
-screen_height = 1000 
+screen_width = 1920
+screen_height = 1080
 
 # Game Variables
 keys = pygame.key.get_pressed()
@@ -210,26 +217,12 @@ while bird1_alive or bird2_alive:
     # Pipe Spawner
     pipe_timer -= 10
     if pipe_timer <= 0:
-        x_top, x_bottom = 1200,1200
+        x_top, x_bottom = 2000,2000
         y_top = random.randint(-900,-100)
         y_bottom = y_top + random.randint(80,100) + pipe_bottom.get_height()
         pipe.add(Pipe(x_top, y_top, pipe_top))
         pipe.add(Pipe(x_bottom, y_bottom, pipe_bottom))
         pipe_timer = random.randint(1500,1800)
-        
-    # Collisions
-    #collisions1 = pygame.sprite.groupcollide(bird1, pipe, False, False)
-    #collisions2 = pygame.sprite.groupcollide(bird1, pipe, False, False)
-    #collisions3 = pygame.sprite.groupcollide(bird1, bird2, False, False)
-    #if collisions1:
-    #    print(1)
-
-    #if collisions2:
-    #    print(2)
-
-    #if collisions3:
-    #    print(3)
-
 
     # Game Window Visuals
         # Sky
