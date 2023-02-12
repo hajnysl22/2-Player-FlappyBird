@@ -13,53 +13,65 @@ class Bird(pygame.sprite.Sprite):
         self.bird_height = 0
         self.bird_speed = 0
         
-
-    def player_input(self):
+    def gameplay(self):
+        self.collision = pygame.sprite.groupcollide(bird1, pipe, False, False)
         self.rect.y += self.bird_height
         self.rect.x -= self.bird_speed
-        keys = pygame.key.get_pressed()
-        # Height
-        if keys[pygame.K_UP]:
-            self.bird_height -= 0.1
-            if self.bird_height >= -0.2:
-                self.bird_height = -0.2
-        if keys[pygame.K_DOWN]:
-            self.bird_height += 0.1
-            if self.bird_height <= 0.2:
-                self.bird_height = 0.2
-        # Movement  
-        if keys[pygame.K_LEFT]:
-            self.bird_speed += 0.1
-            if self.bird_speed <= 0.2:
-                self.bird_speed = 0.2
-        if keys[pygame.K_RIGHT]:
-            self.bird_speed -= 0.1
-            if self.bird_speed >= -0.2:
-                self.bird_speed = -0.2
 
-        # Border
-        if self.rect.y <= 0-5:
-            self.rect.y = 0-5
-
-        if self.rect.bottom >= screen_height+10:
-            self.rect.bottom = screen_height+10
-
-        if self.rect.right >= screen_width:
-            self.rect.right = screen_width
-
-        self.collision = pygame.sprite.groupcollide(bird1, pipe, False, False)
+        # Punishment for colliding the pipe
         if self.collision:
-            self.bird_speed += 1
+            self.bird_speed += 0.16
+            # Border
+            if self.rect.y <= 0-5:
+                self.rect.y = 0-5
 
-    def bird_death(self):
-        global bird1_alive
-        if self.rect.right <= -10:
-            bird1_alive = False
-            self.kill()
+            if self.rect.bottom >= screen_height+10:
+                self.rect.bottom = screen_height+10
+
+            if self.rect.right >= screen_width:
+                self.rect.right = screen_width
+        # Normal gameplay
+        else:
+                self.rect.y += self.bird_height
+                self.rect.x -= self.bird_speed
+                keys = pygame.key.get_pressed()
+                # Height
+                if keys[pygame.K_UP]:
+                    self.bird_height -= 0.075
+                    if self.bird_height >= -0.15:
+                        self.bird_height = -0.15
+                if keys[pygame.K_DOWN]:
+                    self.bird_height += 0.075
+                    if self.bird_height <= 0.15:
+                        self.bird_height = 0.15
+                # Movement  
+                if keys[pygame.K_LEFT]:
+                    self.bird_speed += 0.075
+                    if self.bird_speed <= 0.15:
+                        self.bird_speed = 0.15
+                if keys[pygame.K_RIGHT]:
+                    self.bird_speed -= 0.075
+                    if self.bird_speed >= -0.15:
+                        self.bird_speed = -0.15
+
+                # Border
+                if self.rect.y <= 0-5:
+                    self.rect.y = 0-5
+
+                if self.rect.bottom >= screen_height+10:
+                    self.rect.bottom = screen_height+10
+
+                if self.rect.right >= screen_width:
+                    self.rect.right = screen_width
+
+                # Game Over
+                global bird1_alive
+                if self.rect.right <= -10:
+                    bird1_alive = False
+                    self.kill()
 
     def update(self):
-        self.player_input()
-        self.bird_death()
+        self.gameplay()
 
 class Bird2(pygame.sprite.Sprite):
     global bird_speed
@@ -72,52 +84,65 @@ class Bird2(pygame.sprite.Sprite):
         self.bird_height = 0
         self.bird_speed = 0
 
-    def player2_input(self):
+    def gameplay(self):
+        self.collision = pygame.sprite.groupcollide(bird2, pipe, False, False)
         self.rect.y += self.bird_height
         self.rect.x -= self.bird_speed
-        keys = pygame.key.get_pressed()
-        # Height
-        if keys[pygame.K_w]:
-            self.bird_height -= 0.1
-            if self.bird_height >= -0.2:
-                self.bird_height = -0.2
-        if keys[pygame.K_s]:
-            self.bird_height += 0.1
-            if self.bird_height <= 0.2:
-                self.bird_height = 0.2
-        # Movement  
-        if keys[pygame.K_a]:
-            self.bird_speed += 0.1
-            if self.bird_speed <= 0.2:
-                self.bird_speed = 0.2
-        if keys[pygame.K_d]:
-            self.bird_speed -= 0.1
-            if self.bird_speed >= -0.2:
-                self.bird_speed = -0.2
 
-
-        # Border
-        if self.rect.y <= 0-10:
-            self.rect.y = 0-10
-
-        if self.rect.bottom >= screen_height+10:
-            self.rect.bottom = screen_height+10
-
-        if self.rect.right >= screen_width:
-            self.rect.right = screen_width
-
-        self.collision = pygame.sprite.groupcollide(bird2, pipe, False, False)
+        # Punishment for colliding the pipe
         if self.collision:
-            self.bird_speed += 1
+            self.bird_speed += 0.16
+            # Border
+            if self.rect.y <= 0-5:
+                self.rect.y = 0-5
 
-    def bird_death(self):
-        global bird2_alive 
-        if self.rect.right <= -10:
-            bird2_alive = False
+            if self.rect.bottom >= screen_height+10:
+                self.rect.bottom = screen_height+10
+
+            if self.rect.right >= screen_width:
+                self.rect.right = screen_width
+        # Normal gameplay
+        else:
+                self.rect.y += self.bird_height
+                self.rect.x -= self.bird_speed
+                keys = pygame.key.get_pressed()
+                # Height
+                if keys[pygame.K_w]:
+                    self.bird_height -= 0.075
+                    if self.bird_height >= -0.15:
+                        self.bird_height = -0.15
+                if keys[pygame.K_s]:
+                    self.bird_height += 0.075
+                    if self.bird_height <= 0.15:
+                        self.bird_height = 0.15
+                # Movement  
+                if keys[pygame.K_a]:
+                    self.bird_speed += 0.075
+                    if self.bird_speed <= 0.15:
+                        self.bird_speed = 0.15
+                if keys[pygame.K_d]:
+                    self.bird_speed -= 0.075
+                    if self.bird_speed >= -0.15:
+                        self.bird_speed = -0.15
+
+                # Border
+                if self.rect.y <= 0-5:
+                    self.rect.y = 0-5
+
+                if self.rect.bottom >= screen_height+10:
+                    self.rect.bottom = screen_height+10
+
+                if self.rect.right >= screen_width:
+                    self.rect.right = screen_width
+
+                # Game Over
+                global bird2_alive
+                if self.rect.right <= -10:
+                    bird2_alive = False
+                    self.kill()
 
     def update(self):
-        self.player2_input()
-        self.bird_death()
+        self.gameplay()
 
 class Pipe(pygame.sprite.Sprite):
     def __init__(self,x, y, image):
@@ -187,10 +212,10 @@ while bird1_alive or bird2_alive:
     if pipe_timer <= 0:
         x_top, x_bottom = 1200,1200
         y_top = random.randint(-900,-100)
-        y_bottom = y_top + 100 + pipe_bottom.get_height()
+        y_bottom = y_top + random.randint(80,100) + pipe_bottom.get_height()
         pipe.add(Pipe(x_top, y_top, pipe_top))
         pipe.add(Pipe(x_bottom, y_bottom, pipe_bottom))
-        pipe_timer = random.randint(1500,2000)
+        pipe_timer = random.randint(1500,1800)
         
     # Collisions
     #collisions1 = pygame.sprite.groupcollide(bird1, pipe, False, False)
