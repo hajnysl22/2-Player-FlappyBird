@@ -20,23 +20,20 @@ class Bird(pygame.sprite.Sprite):
 
         # Punishment for colliding the pipe
         if self.collision:
-            # Need to stop the player first
-            if self.bird_speed >= 0:
-                self.bird_speed = 0
-            elif self.bird_speed <= 0:
-                self.bird_speed = 0
             # Punishing the player
             self.bird_speed += 1
 
             # Border
+                    # Y
             if self.rect.y <= 0-5:
                 self.rect.y = 0-5
-
+                    # Y
             if self.rect.bottom >= screen_height+10:
                 self.rect.bottom = screen_height+10
-
+                    # X
             if self.rect.right >= screen_width:
                 self.rect.right = screen_width
+
         # Normal gameplay
         else:
                 self.rect.y += self.bird_height
@@ -84,6 +81,7 @@ class Bird2(pygame.sprite.Sprite):
     global bird_speed
     def __init__(self):
         super().__init__()
+        # Bird 2 variables
         self.image = pygame.image.load("Visuals/bird2.png").convert_alpha()
         self.bird2_x = screen_width/5
         self.bird2_y = screen_width/2
@@ -133,12 +131,13 @@ class Bird2(pygame.sprite.Sprite):
                         self.bird_speed = -0.15
 
                 # Border
+                    # Y
                 if self.rect.y <= 0-5:
                     self.rect.y = 0-5
-
+                    # Y
                 if self.rect.bottom >= screen_height+10:
                     self.rect.bottom = screen_height+10
-
+                    # X
                 if self.rect.right >= screen_width:
                     self.rect.right = screen_width
 
@@ -159,6 +158,7 @@ class Pipe(pygame.sprite.Sprite):
         self.rect.x, self.rect.y = x, y
        
     def update(self):
+        # Destroying the pipe
         self.rect.x -= pipe_speed
         if self.rect.x <= -200: 
             self.kill()
@@ -175,6 +175,10 @@ bird_speed = 0
 # Status of birds
 bird1_alive = True
 bird2_alive = True
+
+# Scores
+bird1_score = 0
+bird2_score = 0
 
 # Pipe Variables
 pipe_speed = 3.5
@@ -196,12 +200,13 @@ bg = pygame.image.load("Visuals/background.png").convert()
 pipe_top = pygame.image.load("Visuals/pipe_top.png").convert_alpha()
 pipe_bottom = pygame.image.load("Visuals/pipe_bottom.png").convert_alpha()
 
-# Birds
+    # Bird1
 bird1 = pygame.sprite.Group()
-bird1.add(Bird(),)
+bird1.add(Bird())
 
+    # Bird2
 bird2 = pygame.sprite.Group()
-bird2.add(Bird2(),)
+bird2.add(Bird2())
 
 # Pipes
 pipe = pygame.sprite.Group()
@@ -217,12 +222,25 @@ while bird1_alive or bird2_alive:
     # Pipe Spawner
     pipe_timer -= 10
     if pipe_timer <= 0:
+        # Start position of pipe
         x_top, x_bottom = 2000,2000
+        # Height of pipe
         y_top = random.randint(-900,-100)
+        # Gap between pipes
         y_bottom = y_top + random.randint(80,100) + pipe_bottom.get_height()
+        # Adding the pipe to the background
         pipe.add(Pipe(x_top, y_top, pipe_top))
         pipe.add(Pipe(x_bottom, y_bottom, pipe_bottom))
+        # Generating new timer
         pipe_timer = random.randint(1500,1800)
+
+    # Score counter
+        # Player 1
+    if bird1_alive:
+        bird1_score += 1
+        # Player 2
+    if bird2_alive:
+        bird2_score += 1
 
     # Game Window Visuals
         # Sky
@@ -236,7 +254,6 @@ while bird1_alive or bird2_alive:
         # Bird 2
     bird2.draw(screen)
     bird2.update()
-
 
     # Update
     pygame.display.update()
