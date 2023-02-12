@@ -179,6 +179,7 @@ bird2_alive = True
 # Scores
 bird1_score = 0
 bird2_score = 0
+font = pygame.font.SysFont("Visuals/square-deal.ttf",50)
 
 # Pipe Variables
 pipe_speed = 3.5
@@ -237,10 +238,15 @@ while bird1_alive or bird2_alive:
     # Score counter
         # Player 1
     if bird1_alive:
-        bird1_score += 1
+        bird1_score = int(pygame.time.get_ticks() / 1000)
+        score1 = font.render(f'Player 1:  {bird1_score}', False, (255,102,178))
+        score1_rect = score1.get_rect(center = (120, 50))
+
         # Player 2
     if bird2_alive:
-        bird2_score += 1
+        bird2_score = int(pygame.time.get_ticks() / 1000)
+        score2 = font.render(f'Player 2:  {bird2_score}', False, (255,102,178))
+        score2_rect = score1.get_rect(center = (120, 100))
 
     # Game Window Visuals
         # Sky
@@ -254,6 +260,10 @@ while bird1_alive or bird2_alive:
         # Bird 2
     bird2.draw(screen)
     bird2.update()
+        # Score 1
+    screen.blit(score1, score1_rect)
+        # Score 2
+    screen.blit(score2, score2_rect)
 
     # Update
     pygame.display.update()
