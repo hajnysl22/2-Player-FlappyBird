@@ -14,14 +14,23 @@ class Bird(pygame.sprite.Sprite):
         self.bird_speed = 0
         
     def gameplay(self):
+        global keys
         self.collision = pygame.sprite.groupcollide(bird1, pipe, False, False)
         self.rect.y += self.bird_height
         self.rect.x -= self.bird_speed
 
         # Punishment for colliding the pipe
-        if self.collision:
+        if self.collision:    
+            if keys[pygame.K_UP]:
+                self.bird_height -= 0.075
+                if self.bird_height >= -0.15:
+                    self.bird_height = -0.15
+            if keys[pygame.K_DOWN]:
+                self.bird_height += 0.075
+                if self.bird_height <= 0.15:
+                    self.bird_height = 0.15
             # Punishing the player
-            self.bird_speed += 1
+            self.bird_speed = pipe_speed + 1
 
             # Border
                     # Y
@@ -70,7 +79,7 @@ class Bird(pygame.sprite.Sprite):
 
                 # Game Over
                 global bird1_alive
-                if self.rect.right <= -10:
+                if self.rect.right <= 0:
                     bird1_alive = False
                     self.kill()
 
@@ -90,22 +99,34 @@ class Bird2(pygame.sprite.Sprite):
         self.bird_speed = 0
 
     def gameplay(self):
+        global keys
         self.collision = pygame.sprite.groupcollide(bird2, pipe, False, False)
         self.rect.y += self.bird_height
         self.rect.x -= self.bird_speed
 
         # Punishment for colliding the pipe
         if self.collision:
-            self.bird_speed += 0.16
+            self.bird_speed = pipe_speed + 1
+
+            if keys[pygame.K_w]:
+                self.bird_height -= 0.075
+                if self.bird_height >= -0.15:
+                    self.bird_height = -0.15
+            if keys[pygame.K_s]:
+                self.bird_height += 0.075
+                if self.bird_height <= 0.15:
+                    self.bird_height = 0.15
+
             # Border
-            if self.rect.y <= 0-5:
-                self.rect.y = 0-5
+            if self.rect.y <= -10:
+                self.rect.y = -10
 
             if self.rect.bottom >= screen_height+10:
                 self.rect.bottom = screen_height+10
 
             if self.rect.right >= screen_width:
                 self.rect.right = screen_width
+
         # Normal gameplay
         else:
                 self.rect.y += self.bird_height
@@ -143,7 +164,7 @@ class Bird2(pygame.sprite.Sprite):
 
                 # Game Over
                 global bird2_alive
-                if self.rect.right <= -10:
+                if self.rect.right <= 0:
                     bird2_alive = False
                     self.kill()
 
@@ -228,7 +249,7 @@ while bird1_alive or bird2_alive:
         # Height of pipe
         y_top = random.randint(-900,-100)
         # Gap between pipes
-        y_bottom = y_top + random.randint(80,100) + pipe_bottom.get_height()
+        y_bottom = y_top + random.randint(80,120) + pipe_bottom.get_height()
         # Adding the pipe to the background
         pipe.add(Pipe(x_top, y_top, pipe_top))
         pipe.add(Pipe(x_bottom, y_bottom, pipe_bottom))
@@ -247,7 +268,7 @@ while bird1_alive or bird2_alive:
         bird2_score = int(pygame.time.get_ticks() / 1000)
         score2 = font.render(f'Player 2:  {bird2_score}', False, (255,102,178))
         score2_rect = score1.get_rect(center = (120, 100))
-
+ 
     # Game Window Visuals
         # Sky
     screen.blit(bg, (0,0))
