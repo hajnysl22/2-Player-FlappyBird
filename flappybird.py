@@ -1,6 +1,7 @@
 import pygame
 import random
 from pygame.locals import *
+from pipe import Pipe
 pygame.init()
 
 class Bird(pygame.sprite.Sprite):
@@ -171,18 +172,6 @@ class Bird2(pygame.sprite.Sprite):
     def update(self):
         self.gameplay()
 
-class Pipe(pygame.sprite.Sprite):
-    def __init__(self,x, y, image):
-        pygame.sprite.Sprite.__init__(self)
-        self.image = image
-        self.rect = self.image.get_rect()
-        self.rect.x, self.rect.y = x, y
-       
-    def update(self):
-        # Destroying the pipe
-        self.rect.x -= pipe_speed
-        if self.rect.x <= -200: 
-            self.kill()
 
     # Game Window's variables
 screen_width = 1920
