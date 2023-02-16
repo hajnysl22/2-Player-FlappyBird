@@ -23,13 +23,12 @@ class Bird:
         pygame.draw.rect(screen,self.rect, self.image.get_rect(midbottom = (self.bird1_x,self.bird1_y)))
         
     def gameplay(self):
-        global keys
-        self.collision = pygame.sprite.groupcollide(bird1, pipe, False, False)
+        global keys, collision
         self.rect.y += self.bird_height
         self.rect.x -= self.bird_speed
 
         # Punishment for colliding the pipe
-        if self.collision:    
+        if collision:    
             if keys[pygame.K_UP]:
                 self.bird_height -= 0.075
                 if self.bird_height >= -0.15:
@@ -90,6 +89,11 @@ class Bird:
                 global bird1_alive
                 if self.rect.right <= 0:
                     bird1_alive = False
+                    self.kill()
+
+                global bird2_alive
+                if self.rect.right <= 0:
+                    bird2_alive = False
                     self.kill()
 
     def update(self):

@@ -5,7 +5,7 @@ from pipe import Pipe
 from bird import Bird
 pygame.init()
 
-    # Game Window's variables
+# Game Window's variables
 screen_width = 1920
 screen_height = 1080
 
@@ -13,6 +13,7 @@ screen_height = 1080
 keys = pygame.key.get_pressed()
 clock = pygame.time.Clock()
 bird_speed = 0
+collision = False
 
 # Status of birds
 bird1_alive = True
@@ -47,10 +48,10 @@ bg = pygame.image.load("Visuals/background.png").convert()
 pipe_top = pygame.image.load("Visuals/pipe_top.png").convert_alpha()
 pipe_bottom = pygame.image.load("Visuals/pipe_bottom.png").convert_alpha()
 
-
 bird1 = Bird(50, 100,bird1_visual,pygame.K_LEFT, pygame.K_RIGHT, pygame.K_UP, pygame.K_DOWN)
 # druhy hrac
 bird2 = Bird(150, 200,bird2_visual,pygame.K_a, pygame.K_d, pygame.K_w, pygame.K_s)
+
 
 # Pipes
 pipe = pygame.sprite.Group()
@@ -91,6 +92,11 @@ while bird1_alive or bird2_alive:
         score2 = font.render(f'Player 2:  {bird2_score}', False, (255,102,178))
         score2_rect = score1.get_rect(center = (120, 100))
  
+    if pygame.sprite.groupcollide(bird1, pipe, False, False):
+        collision = True
+    else:
+        collision = False
+
     # Game Window Visuals
         # Sky
     screen.blit(bg, (0,0))
@@ -98,11 +104,9 @@ while bird1_alive or bird2_alive:
     pipe.draw(screen)
     pipe.update()
         # Bird 1
-    bird1.draw(screen)
-    bird1.update()        
+    bird1.draw(screen)      
         # Bird 2
     bird2.draw(screen)
-    bird2.update()
         # Score 1
     screen.blit(score1, score1_rect)
         # Score 2
