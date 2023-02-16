@@ -18,6 +18,9 @@ class Bird:
         self.right = right_key
         self.up = up_key
         self.down = down_key
+
+    def draw(self,screen):
+        pygame.draw.rect(screen,self.rect, self.image.get_rect(midbottom = (self.bird1_x,self.bird1_y)))
         
     def gameplay(self):
         global keys

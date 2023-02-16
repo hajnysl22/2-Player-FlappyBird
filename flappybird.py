@@ -20,6 +20,7 @@ bird2_alive = True
 
 # Bird visualization
 bird1_visual = pygame.image.load("Visuals/bird.png")
+bird2_visual = pygame.image.load("Visuals/bird2.png")
 
 # Scores
 bird1_score = 0
@@ -49,11 +50,7 @@ pipe_bottom = pygame.image.load("Visuals/pipe_bottom.png").convert_alpha()
 
 bird1 = Bird(50, 100,bird1_visual,pygame.K_LEFT, pygame.K_RIGHT, pygame.K_UP, pygame.K_DOWN)
 # druhy hrac
-bird2 = Bird(
-    (150, 200),
-    (50, 40),
-    (200, 10, 50),
-    pygame.K_a, pygame.K_d, pygame.K_w, pygame.K_s)
+bird2 = Bird(150, 200,bird2_visual,pygame.K_a, pygame.K_d, pygame.K_w, pygame.K_s)
 
 # Pipes
 pipe = pygame.sprite.Group()
