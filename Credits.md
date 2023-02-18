@@ -14,3 +14,6 @@ Created by https://freesvg.org/by/OpenClipart <br>
 
 Icon of pygame window - https://freesvg.org/funky-flying-bird
 Created by https://freesvg.org/by/OpenClipart <br>
+
+Game font - https://www.dafont.com/nice-chalk.font
+Created by https://www.dafont.com/nuryanto-dwi.d8601
