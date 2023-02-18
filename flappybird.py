@@ -1,5 +1,6 @@
 import pygame
 import random
+import pickle
 from pygame.locals import *
 pygame.init()
 from pipe import Pipe
@@ -172,6 +173,31 @@ class Bird2(pygame.sprite.Sprite):
     def update(self):
         self.gameplay()
 
+
+def score():
+    # Opening file in read mode
+    f = open('highscore.txt','r') 
+    # Reading lines
+    highscore_file = f.readlines()
+    highscore_file.add(1)
+    # First line of text file
+    last = int(highscore_file[0]) 
+
+    if last < int(bird1_score):
+        f.close()
+        highscore_file = open('scores.txt', 'w')
+        highscore_file.write(str(score))
+        highscore_file.close()
+
+        return score
+    elif last < int(bird2_score):     
+        f.close()
+        highscore_file = open('scores.txt', 'w')
+        highscore_file.write(str(score))
+        highscore_file.close()
+    
+    return last
+
     # Game Window's variables
 screen_width = 1920
 screen_height = 1080
@@ -181,6 +207,10 @@ keys = pygame.key.get_pressed()
 clock = pygame.time.Clock()
 bird_speed = 0
 
+# Global Highscore
+highscore = open("highscore.txt", "w+")
+highscore_number = highscore.read()
+
 # Status of birds
 bird1_alive = True
 bird2_alive = True
@@ -188,7 +218,7 @@ bird2_alive = True
 # Scores
 bird1_score = 0
 bird2_score = 0
-font = pygame.font.SysFont("Visuals/square-deal.ttf",50)
+font = pygame.font.Font("Visuals/FFFFORWA.TTF",25)
 
 # Pipe Variables
 pipe_speed = 3.5
@@ -274,6 +304,7 @@ while bird1_alive or bird2_alive:
         # Score 2
     screen.blit(score2, score2_rect)
 
+    score()
     # Update
     pygame.display.update()
 
