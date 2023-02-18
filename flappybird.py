@@ -194,7 +194,7 @@ font = pygame.font.Font("Visuals/FFFFORWA.TTF",25)
 # Global Highscore
 if os.path.exists("highscore.txt"):
     with open("highscore.txt", 'r') as file:
-        high_score = int(file.read())
+            high_score = int(file.read())
 else:
     high_score = 0
 
