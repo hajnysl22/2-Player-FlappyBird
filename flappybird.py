@@ -178,23 +178,21 @@ def score():
     file = f.readlines()
     last = int(file[0])
 
-    if bird1_score > bird2_score:
+    if bird1_score > last:
         high_score = bird1_score
-        if high_score > last:
-            f.close()
-            file = open('highscore.txt', 'w')
-            file.write(str(high_score))
-            file.close()  
-            return high_score
-
-    elif bird1_score < bird2_score:
+        f.close()
+        file = open('highscore.txt', 'w')
+        file.write(str(high_score))
+        file.close()  
+        return high_score
+ 
+    elif bird2_score > last:      
         high_score = bird2_score
-        if high_score > last:
-            f.close()
-            file = open('highscore.txt', 'w')
-            file.write(str(high_score))
-            file.close()
-            return high_score          
+        f.close()
+        file = open('highscore.txt', 'w')
+        file.write(str(high_score))
+        file.close()
+        return high_score     
 
     return last
 
