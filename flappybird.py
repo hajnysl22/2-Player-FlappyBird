@@ -173,7 +173,7 @@ class Bird2(pygame.sprite.Sprite):
         self.gameplay()
 
 def score():
-    global high_score, bird1_score, bird2_score
+    global high_score, bird1_score, bird2_score, last
     f = open('highscore.txt','r')
     file = f.readlines()
     last = int(file[0])
@@ -306,7 +306,7 @@ while bird1_alive or bird2_alive:
         # Score 2
     screen.blit(score2, score2_rect)
         # Highscore
-    highscore = font.render(f'Highscore:  {high_score}', False, (255,102,178))
+    highscore = font.render(f'Highscore:  {last}', False, (255,102,178))
     highscore_rect = highscore.get_rect(center = (1700, 50))
     screen.blit(highscore, highscore_rect)
     # Update
