@@ -1,6 +1,5 @@
 import pygame
 import random
-import os
 from pygame.locals import *
 pygame.init()
 from pipe import Pipe
@@ -181,19 +180,21 @@ def score():
 
     if bird1_score > bird2_score:
         high_score = bird1_score
-        f.close()
-        file = open('highscore.txt', 'w')
-        file.write(str(high_score))
-        file.close()  
-        return high_score
+        if high_score > last:
+            f.close()
+            file = open('highscore.txt', 'w')
+            file.write(str(high_score))
+            file.close()  
+            return high_score
 
     elif bird1_score < bird2_score:
         high_score = bird2_score
-        f.close()
-        file = open('highscore.txt', 'w')
-        file.write(str(high_score))
-        file.close()
-        return high_score          
+        if high_score > last:
+            f.close()
+            file = open('highscore.txt', 'w')
+            file.write(str(high_score))
+            file.close()
+            return high_score          
 
     return last
 
