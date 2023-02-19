@@ -173,6 +173,30 @@ class Bird2(pygame.sprite.Sprite):
     def update(self):
         self.gameplay()
 
+def score():
+    global high_score, bird1_score, bird2_score
+    f = open('highscore.txt','r')
+    file = f.readlines()
+    last = int(file[0])
+
+    if bird1_score > bird2_score:
+        high_score = bird1_score
+        f.close()
+        file = open('highscore.txt', 'w')
+        file.write(str(high_score))
+        file.close()  
+        return high_score
+
+    elif bird1_score < bird2_score:
+        high_score = bird2_score
+        f.close()
+        file = open('highscore.txt', 'w')
+        file.write(str(high_score))
+        file.close()
+        return high_score          
+
+    return last
+
     # Game Window's variables
 screen_width = 1920
 screen_height = 1080
@@ -191,12 +215,9 @@ bird1_score = 0
 bird2_score = 0
 font = pygame.font.Font("Visuals/FFFFORWA.TTF",25)
 
-# Global Highscore
-if os.path.exists("highscore.txt"):
-    with open("highscore.txt", 'r') as file:
-            high_score = int(file.read())
-else:
-    high_score = 0
+# Highscore
+high_score = ""
+
 
 # Pipe Variables
 pipe_speed = 3.5
@@ -259,12 +280,16 @@ while bird1_alive or bird2_alive:
         score1 = font.render(f'Player 1:  {bird1_score}', False, (255,102,178))
         score1_rect = score1.get_rect(center = (120, 50))
 
+
         # Player 2
     if bird2_alive:
         bird2_score = int(pygame.time.get_ticks() / 1000)
         score2 = font.render(f'Player 2:  {bird2_score}', False, (255,102,178))
         score2_rect = score1.get_rect(center = (120, 100))
- 
+
+    # Score counter
+    score()
+
     # Game Window Visuals
         # Sky
     screen.blit(bg, (0,0))
@@ -281,8 +306,14 @@ while bird1_alive or bird2_alive:
     screen.blit(score1, score1_rect)
         # Score 2
     screen.blit(score2, score2_rect)
+        # Highscore
+    highscore = font.render(f'Highscore:  {high_score}', False, (255,102,178))
+    highscore_rect = highscore.get_rect(center = (1700, 50))
+    screen.blit(highscore, highscore_rect)
     # Update
     pygame.display.update()
 
     # FPS
     clock.tick(60)
+
+
