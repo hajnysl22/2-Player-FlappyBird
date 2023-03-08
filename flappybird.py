@@ -285,22 +285,22 @@ while True:
                 # Generating new timer
                 pipe_timer = random.randint(1500,1800)
 
+    # Score counter
+        # Player 1
+    if game_active:
+        if bird1_alive:
+            bird1_score = int(pygame.time.get_ticks() / 1000)
+            score1 = font.render(f'Player 1:  {bird1_score}', False, (255,102,178))
+            score1_rect = score1.get_rect(center = (120, 50))
+
+            # Player 2
+        if bird2_alive:
+            bird2_score = int(pygame.time.get_ticks() / 1000)
+            score2 = font.render(f'Player 2:  {bird2_score}', False, (255,102,178))
+            score2_rect = score1.get_rect(center = (120, 100))
+
         # Score counter
-            # Player 1
-        if game_active:
-            if bird1_alive:
-                bird1_score = int(pygame.time.get_ticks() / 1000)
-                score1 = font.render(f'Player 1:  {bird1_score}', False, (255,102,178))
-                score1_rect = score1.get_rect(center = (120, 50))
-
-                # Player 2
-            if bird2_alive:
-                bird2_score = int(pygame.time.get_ticks() / 1000)
-                score2 = font.render(f'Player 2:  {bird2_score}', False, (255,102,178))
-                score2_rect = score1.get_rect(center = (120, 100))
-
-            # Score counter
-            score()
+        score()
 
     if game_active:
         # Game Window Visuals
@@ -323,13 +323,13 @@ while True:
         highscore = font.render(f'Highscore:  {last}', False, (255,102,178))
         highscore_rect = highscore.get_rect(center = (1700, 50))
         screen.blit(highscore, highscore_rect)
-    
-    else: 
+
+    if game_active == False: 
         if bird1_score == 0  and bird2_score == 0:
             screen.blit(game_start, (0,0))
-        else:
-            screen.blit(game_over, (0,0))
-    
+    if bird1_alive == False and bird2_alive == False:
+        screen.blit(game_over, (0,0))
+
     # Update
     pygame.display.update()
 
