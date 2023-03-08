@@ -216,6 +216,7 @@ game_active = False
 bird1_score = 0
 bird2_score = 0
 font = pygame.font.Font("Visuals/FFFFORWA.TTF",25)
+font2 = pygame.font.Font("Visuals/FFFFORWA.TTF",75)
 
 # Highscore
 high_score = ""
@@ -326,14 +327,18 @@ while True:
 
     if game_active == False: 
         if bird1_score == 0  and bird2_score == 0:
+            # Game start
             screen.blit(game_start, (0,0))
     if bird1_alive == False and bird2_alive == False:
+        # Game over screen
         screen.blit(game_over, (0,0))
+        # Highscore = font.render(f'Highscore: {
+        highscore = font2.render(f'{last}', False, (0,0,0))
+        highscore_rect = highscore.get_rect(center = (950, 450))
+        screen.blit(highscore, highscore_rect)
 
     # Update
     pygame.display.update()
 
     # FPS
     clock.tick(60)
-
-
