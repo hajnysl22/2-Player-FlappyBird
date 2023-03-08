@@ -209,6 +209,9 @@ bird_speed = 0
 bird1_alive = True
 bird2_alive = True
 
+# Game start + over
+game_active = False
+
 # Scores
 bird1_score = 0
 bird2_score = 0
@@ -234,6 +237,10 @@ pygame.display.set_icon(flappybird_icon)
     # Background
 bg = pygame.image.load("Visuals/background.png").convert()
 
+    # Game start
+game_start = pygame.image.load("Visuals/game_start_screen.png").convert()
+    # Game over
+game_over = pygame.image.load("Visuals/game_over_screen.png").convert()
     # Pipes
 pipe_top = pygame.image.load("Visuals/pipe_top.png").convert_alpha()
 pipe_bottom = pygame.image.load("Visuals/pipe_bottom.png").convert_alpha()
@@ -250,65 +257,78 @@ bird2.add(Bird2())
 pipe = pygame.sprite.Group()
 
 # Main Game Loop
-while bird1_alive or bird2_alive:
+while True:
     # Easily exit the game 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             exit()       
 
-    # Pipe Spawner
-    pipe_timer -= 10
-    if pipe_timer <= 0:
-        # Start position of pipe
-        x_top, x_bottom = 2000,2000
-        # Height of pipe
-        y_top = random.randint(-900,-100)
-        # Gap between pipes
-        y_bottom = y_top + random.randint(80,120) + pipe_bottom.get_height()
-        # Adding the pipe to the background
-        pipe.add(Pipe(x_top, y_top, pipe_top))
-        pipe.add(Pipe(x_bottom, y_bottom, pipe_bottom))
-        # Generating new timer
-        pipe_timer = random.randint(1500,1800)
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+            game_active = True    
 
-    # Score counter
-        # Player 1
-    if bird1_alive:
-        bird1_score = int(pygame.time.get_ticks() / 1000)
-        score1 = font.render(f'Player 1:  {bird1_score}', False, (255,102,178))
-        score1_rect = score1.get_rect(center = (120, 50))
+        if game_active:
+            # Pipe Spawner
+            pipe_timer -= 10
+            if pipe_timer <= 0:
+                # Start position of pipe
+                x_top, x_bottom = 2000,2000
+                # Height of pipe
+                y_top = random.randint(-900,-100)
+                # Gap between pipes
+                y_bottom = y_top + random.randint(80,120) + pipe_bottom.get_height()
+                # Adding the pipe to the background
+                pipe.add(Pipe(x_top, y_top, pipe_top))
+                pipe.add(Pipe(x_bottom, y_bottom, pipe_bottom))
+                # Generating new timer
+                pipe_timer = random.randint(1500,1800)
+
+        # Score counter
+            # Player 1
+        if game_active:
+            if bird1_alive:
+                bird1_score = int(pygame.time.get_ticks() / 1000)
+                score1 = font.render(f'Player 1:  {bird1_score}', False, (255,102,178))
+                score1_rect = score1.get_rect(center = (120, 50))
 
 
-        # Player 2
-    if bird2_alive:
-        bird2_score = int(pygame.time.get_ticks() / 1000)
-        score2 = font.render(f'Player 2:  {bird2_score}', False, (255,102,178))
-        score2_rect = score1.get_rect(center = (120, 100))
+                # Player 2
+            if game_active and bird2_alive:
+                bird2_score = int(pygame.time.get_ticks() / 1000)
+                score2 = font.render(f'Player 2:  {bird2_score}', False, (255,102,178))
+                score2_rect = score1.get_rect(center = (120, 100))
 
-    # Score counter
-    score()
+            # Score counter
+            score()
 
-    # Game Window Visuals
-        # Sky
-    screen.blit(bg, (0,0))
-        # Obstacles
-    pipe.draw(screen)
-    pipe.update()
-        # Bird 1
-    bird1.draw(screen)
-    bird1.update()        
-        # Bird 2
-    bird2.draw(screen)
-    bird2.update()
-        # Score 1
-    screen.blit(score1, score1_rect)
-        # Score 2
-    screen.blit(score2, score2_rect)
-        # Highscore
-    highscore = font.render(f'Highscore:  {last}', False, (255,102,178))
-    highscore_rect = highscore.get_rect(center = (1700, 50))
-    screen.blit(highscore, highscore_rect)
+    if game_active:
+        # Game Window Visuals
+            # Sky
+        screen.blit(bg, (0,0))
+            # Obstacles
+        pipe.draw(screen)
+        pipe.update()
+            # Bird 1
+        bird1.draw(screen)
+        bird1.update()        
+            # Bird 2
+        bird2.draw(screen)
+        bird2.update()
+            # Score 1
+        screen.blit(score1, score1_rect)
+            # Score 2
+        screen.blit(score2, score2_rect)
+            # Highscore
+        highscore = font.render(f'Highscore:  {last}', False, (255,102,178))
+        highscore_rect = highscore.get_rect(center = (1700, 50))
+        screen.blit(highscore, highscore_rect)
+    
+    else: 
+        if bird1_score == 0  and bird2_score == 0:
+            screen.blit(game_start, (0,0))
+        else:
+            screen.blit(game_over, (0,0))
+    
     # Update
     pygame.display.update()
 
