@@ -216,6 +216,7 @@ clock = pygame.time.Clock()
 start_time = time.time()
 start_time2 = time.time()
 bird_speed = 0
+number = 1
 
 # Status of birds
 bird1_alive = True
@@ -277,10 +278,32 @@ while True:
             exit()       
 
         if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-            reset_score()
-            game_active = True    
-            bird1_alive = True
-            bird2_alive = True
+            if game_active == False and number == 1:
+                game_active = True
+                number += 1 
+
+            if game_active == False and number > 1:
+                game_active = True
+                score1 = font.render(f'Player 1:  {bird1_score}', False, (255,102,178))
+                score1_rect = score1.get_rect(center = (120, 50))
+                score2 = font.render(f'Player 2:  {bird2_score}', False, (255,102,178))
+                score2_rect = score1.get_rect(center = (120, 100))
+
+                reset_score()
+                screen.blit(bg, (0,0))
+                    # Obstacles
+                pipe.draw(screen)
+                pipe.update()
+                    # Bird 1
+                bird1.draw(screen)
+                bird1.update()        
+                    # Bird 2
+                bird2.draw(screen)
+                bird2.update()
+                    # Score 1
+                screen.blit(score1, score1_rect)
+                    # Score 2
+                screen.blit(score2, score2_rect)
 
     if game_active == True:
         # Pipe Spawner
@@ -297,9 +320,6 @@ while True:
             pipe.add(Pipe(x_bottom, y_bottom, pipe_bottom))
             # Generating new timer
             pipe_timer = random.randint(1500,1800)
-
-        #else:
-        #   pipe.killpg()
 
     # Score counter
         # Player 1
