@@ -13,3 +13,6 @@ class Pipe(pygame.sprite.Sprite):
         self.rect.x -= self.pipe_speed
         if self.rect.x <= -200: 
             self.kill()
+
+    def destroy(self):
+        self.kill()       
