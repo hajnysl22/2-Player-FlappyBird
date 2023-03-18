@@ -214,6 +214,7 @@ def reset_score():
 keys = pygame.key.get_pressed()
 clock = pygame.time.Clock()
 start_time = time.time()
+start_time2 = time.time()
 bird_speed = 0
 
 # Status of birds
@@ -312,9 +313,9 @@ while True:
 
             # Player 2
         if bird2_alive:
-            if time.time() - start_time >= 1:
+            if time.time() - start_time2 >= 1:
                 bird2_score += 1
-                start_time = time.time()
+                start_time2 = time.time()
             score2 = font.render(f'Player 2:  {bird2_score}', False, (255,102,178))
             score2_rect = score1.get_rect(center = (120, 100))
 
