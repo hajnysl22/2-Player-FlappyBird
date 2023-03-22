@@ -281,6 +281,7 @@ while True:
             game_active = True
             bird1_alive = True
             bird2_alive = True
+            pipe.empty()
             number += 1 
 
 
