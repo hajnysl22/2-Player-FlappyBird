@@ -20,7 +20,7 @@ class Bird(pygame.sprite.Sprite):
         self.bird_speed = 0
         
     def gameplay(self):
-        global keys
+        global keys, game_active
         self.collision = pygame.sprite.groupcollide(bird1, pipe, False, False)
         self.rect.y += self.bird_height
         self.rect.x -= self.bird_speed
@@ -87,7 +87,8 @@ class Bird(pygame.sprite.Sprite):
                 global bird1_alive
                 if self.rect.right <= 0:
                     bird1_alive = False
-                    self.bird1_x, self.bird1_y = -100,-100
+                    self.rect.x = 1000    
+                    self.bird_speed = 0   
 
     def update(self):
         self.gameplay()
@@ -105,7 +106,7 @@ class Bird2(pygame.sprite.Sprite):
         self.bird_speed = 0
 
     def gameplay(self):
-        global keys, bird2_alive
+        global keys, bird2_alive, bird1_alive
         self.collision = pygame.sprite.groupcollide(bird2, pipe, False, False)
         self.rect.y += self.bird_height
         self.rect.x -= self.bird_speed
@@ -171,7 +172,8 @@ class Bird2(pygame.sprite.Sprite):
                 # Game Over
                 if self.rect.right <= 0:
                     bird2_alive = False
-                    self.bird2_x, self.bird2_y = -100,-100
+                    self.rect.x = 1000     
+                    self.bird_speed = 0      
 
     def update(self):
         self.gameplay()
