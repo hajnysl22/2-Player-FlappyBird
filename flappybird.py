@@ -87,7 +87,7 @@ class Bird(pygame.sprite.Sprite):
                 global bird1_alive
                 if self.rect.right <= 0:
                     bird1_alive = False
-                    self.kill()
+                    self.bird1_x, self.bird1_y = -100,-100
 
     def update(self):
         self.gameplay()
@@ -171,12 +171,7 @@ class Bird2(pygame.sprite.Sprite):
                 # Game Over
                 if self.rect.right <= 0:
                     bird2_alive = False
-                    self.kill()
-
-        #if game_active == False and bird2_alive == False:
-        #    if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-        #        bird2_alive = True    
-
+                    self.bird2_x, self.bird2_y = -100,-100
 
     def update(self):
         self.gameplay()
@@ -299,9 +294,6 @@ while True:
             # Generating new timer
             pipe_timer = random.randint(1500,1800)
 
-        #else:
-        #   pipe.killpg()
-
     # Score counter
         # Player 1
     if game_active:
@@ -353,7 +345,6 @@ while True:
     if bird1_alive == False and bird2_alive == False:
         # Game over screen
         screen.blit(game_over, (0,0))
-        # Highscore = font.render(f'Highscore: {
         highscore = font2.render(f'{last}', False, (0,0,0))
         highscore_rect = highscore.get_rect(center = (950, 450))
         screen.blit(highscore, highscore_rect)
