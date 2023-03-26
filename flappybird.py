@@ -84,9 +84,11 @@ class Bird(pygame.sprite.Sprite):
                     self.rect.right = screen_width
 
                 # Game Over
-                global bird1_alive
+                global bird1_alive,bird2_alive 
                 if self.rect.right <= 0:
                     bird1_alive = False
+                    self.rect.right = -10000000
+                if bird1_alive == False and bird2_alive == False:
                     self.rect.x = 1000    
                     self.bird_speed = 0   
 
@@ -171,9 +173,11 @@ class Bird2(pygame.sprite.Sprite):
 
                 # Game Over
                 if self.rect.right <= 0:
-                    bird2_alive = False
-                    self.rect.x = 1000     
-                    self.bird_speed = 0      
+                    bird1_alive = False
+                    self.rect.right = -10000000
+                if bird1_alive == False and bird2_alive == False:
+                    self.rect.x = 1000    
+                    self.bird_speed = 0        
 
     def update(self):
         self.gameplay()
