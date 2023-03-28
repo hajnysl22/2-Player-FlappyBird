@@ -14,7 +14,7 @@ class Bird(pygame.sprite.Sprite):
         super().__init__()
         self.image = pygame.image.load("Visuals/bird.png").convert_alpha()
         self.bird1_x = screen_width/2
-        self.bird1_y = screen_width/2
+        self.bird1_y = screen_height/2
         self.rect = self.image.get_rect(midbottom = (self.bird1_x,self.bird1_y))
         self.bird_height = 0
         self.bird_speed = 0
@@ -89,8 +89,10 @@ class Bird(pygame.sprite.Sprite):
                     bird1_alive = False
                     self.rect.right = -1000000
                 if bird1_alive == False and bird2_alive == False:
-                    self.rect.x = 1000    
-                    self.bird_speed = 0   
+                    self.rect.x = screen_width/2
+                    self.rect.y = screen_height/2    
+                    self.bird_speed = 0
+                    self.bird_height = 0   
 
     def update(self):
         self.gameplay()
@@ -102,7 +104,7 @@ class Bird2(pygame.sprite.Sprite):
         # Bird 2 variables
         self.image = pygame.image.load("Visuals/bird2.png").convert_alpha()
         self.bird2_x = screen_width/5
-        self.bird2_y = screen_width/2
+        self.bird2_y = screen_height/2
         self.rect = self.image.get_rect(midbottom = (self.bird2_x,self.bird2_y))
         self.bird_height = 0
         self.bird_speed = 0
@@ -176,8 +178,10 @@ class Bird2(pygame.sprite.Sprite):
                     bird2_alive = False
                     self.rect.right = -1000000
                 if bird1_alive == False and bird2_alive == False:
-                    self.rect.x = 1000    
+                    self.rect.x = screen_width/5
+                    self.rect.y = screen_height/2    
                     self.bird_speed = 0        
+                    self.bird_height = 0 
 
     def update(self):
         self.gameplay()
