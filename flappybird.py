@@ -4,6 +4,7 @@ from pygame.locals import *
 pygame.init()
 import time
 from pipe import Pipe
+from pygame import mixer
 
     # Game Window's variables
 screen_width = 1920
@@ -256,8 +257,12 @@ bg = pygame.image.load("Visuals/background.png").convert()
 
     # Game start
 game_start = pygame.image.load("Visuals/game_start_screen.png").convert()
+game_start_sound = pygame.mixer.Sound("Sounds/mainmenu.mp3")
     # Game over
 game_over = pygame.image.load("Visuals/game_over_screen.png").convert()
+game_over_sound = pygame.mixer.Sound("Sounds/gameover.mp3")
+game_over_sound.set_volume(0.5)
+
     # Pipes
 pipe_top = pygame.image.load("Visuals/pipe_top.png").convert_alpha()
 pipe_bottom = pygame.image.load("Visuals/pipe_bottom.png").convert_alpha()
@@ -283,10 +288,16 @@ while True:
 
         if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
             reset_score()
+            game_over_sound.stop()
+            game_start_sound.play(-1)
+                # Game sounds
             game_active = True    
             bird1_alive = True
             bird2_alive = True
             pipe.empty()
+
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE  :
+            exit()
 
     if game_active == True:
         # Pipe Spawner
@@ -354,6 +365,8 @@ while True:
 
     if bird1_alive == False and bird2_alive == False:
         # Game over screen
+        game_start_sound.stop()
+        game_over_sound.play(-1)
         screen.blit(game_over, (0,0))
         highscore = font2.render(f'{last}', False, (0,0,0))
         highscore_rect = highscore.get_rect(center = (950, 450))
