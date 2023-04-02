@@ -236,6 +236,10 @@ bird2_score = 0
 font = pygame.font.Font("Visuals/FFFFORWA.TTF",25)
 font2 = pygame.font.Font("Visuals/FFFFORWA.TTF",75)
 
+# Game exit
+exit_text = font.render('Press Esc to exit the game.', False, (255,102,178))
+exit_text_rect = exit_text.get_rect(center = (1000, 50))
+
 # Highscore
 high_score = ""
 
@@ -353,6 +357,8 @@ while True:
         screen.blit(score1, score1_rect)
             # Score 2
         screen.blit(score2, score2_rect)
+            # Game exit
+        screen.blit(exit_text, exit_text_rect)
             # Highscore
         highscore = font.render(f'Highscore:  {last}', False, (255,102,178))
         highscore_rect = highscore.get_rect(center = (1700, 50))
