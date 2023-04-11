@@ -3,6 +3,9 @@
 Background - https://pixabay.com/cs/illustrations/hra-abstrakce-grafika-2819000/
 Created by https://pixabay.com/cs/users/crissa-5926727/ <br>
 
+Game start bird - https://freesvg.org/flying-brown-bird
+Created by https://freesvg.org/by/OpenClipart <br>
+
 Pipe - https://freesvg.org/green-pipe
 Created by https://freesvg.org/by/OpenClipart <br>
 
